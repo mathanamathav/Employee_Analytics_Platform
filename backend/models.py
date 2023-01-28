@@ -2,9 +2,12 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 
+
+
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'root'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost/employee_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:Sara.1974@localhost/employee_db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db = SQLAlchemy(app)
 
 #our model

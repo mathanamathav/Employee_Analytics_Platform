@@ -1,14 +1,18 @@
+#Employee Platform Imports
 from flask import Flask, render_template ,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
+from datetime import datetime
 from models import Employee
 from datetime import datetime
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:Sara.1974@localhost/employee_db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+app.config['SECRET_KEY'] = 'root'
+#SqlAlchemy Database Configuration With Mysql #update the local user name and password and database name
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost/employee_db'
 db = SQLAlchemy(app)
 
-
+#our model
 class Employee(db.Model):
     __tablename__ = 'employee'
     id = db.Column(db.Integer, primary_key = True)
@@ -89,9 +93,6 @@ def get_minmax_salary():
     result= {}
     return jsonify(Convert(department_salary, result))
     
-
-    
-
 
 @app.route('/demographic/city',methods = ['GET'])
 def city_count():

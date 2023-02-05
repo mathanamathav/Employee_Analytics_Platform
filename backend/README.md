@@ -59,12 +59,18 @@ python app.py
 
 
 ## TO-DO - API Endpoints
-- [x] Gender classification 
+- [x] Gender classification
+- [x] Department count
+- [x] Department maximum and minimum salary 
+- [x] Demographic city
+- [x] Demographic state 
 - [ ] Add more
 
 
 >Sample API Response Preview for Gender Classification
 ![Screenshot_20230126_102319](https://user-images.githubusercontent.com/62739618/214899280-c5a8603b-c451-4b1f-8c4d-e77f055ffc02.png)
+![Screenshot_20230206_120807](https://user-images.githubusercontent.com/62739618/216838398-569b383b-1fee-4483-927f-73709b650505.png)
+![Screenshot_20230206_120829](https://user-images.githubusercontent.com/62739618/216838406-e7f705b1-493f-4d2f-ace0-2b2fd0e9a41a.png)
 
 
 ## Requirments 

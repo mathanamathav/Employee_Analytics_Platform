@@ -53,13 +53,11 @@ def Convert(tup, di):
         di.setdefault(a, []).extend([b,c])
     return di
 
-# two decorators, same function sample function
 @app.route('/')
 @app.route('/index.html')
 def index():
     return render_template('index.html', the_title='Tiger Home Page')
 
-# This endpoint gives classification of gender with their count in our company
 @app.route('/gender_status',methods = ['GET'])
 def symbol():
     gender_count = db.session.query(Employee.gender,func.count(Employee.gender)).group_by(Employee.gender).all()

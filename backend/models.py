@@ -7,6 +7,7 @@ class Employee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     name = db.Column(db.String(100))
+    company_name = db.Column(db.String(100))
     age = db.Column(db.Integer)
     city = db.Column(db.String(100))
     state = db.Column(db.String(100))

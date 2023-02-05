@@ -3,8 +3,7 @@ from flask import Flask, render_template ,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
 from datetime import datetime
-from models import Employee
-from datetime import datetime
+
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'root'

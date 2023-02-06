@@ -3,6 +3,7 @@ from flask import Flask, render_template, jsonify
 from sqlalchemy import func
 from models import Employee, TimeOff, Department
 from db import app,db
+from sqlalchemy import asc
 
 
 def Convert(tup, di):
@@ -74,6 +75,16 @@ def state_count():
         result[state] = count
     return jsonify(result)
 
+@app.route('/timeoff/averagevacationtime', methods=['GET'])
+def vacation_time():
+    leave_count = db.session.query(TimeOff.id, func.count(
+        TimeOff.id)).group_by(TimeOff.id).order_by(asc(TimeOff.id)).all()
+    result = {}
+    for data in leave_count:
+        leave, count = data
+        leave = 'Number_of_vaction_days_for_Employee_id_{}_are '.format(str(leave))
+        result[leave] = count
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(debug=True)

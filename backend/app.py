@@ -3,6 +3,7 @@ from flask import Flask, render_template, jsonify
 from sqlalchemy import func
 from models import Employee, TimeOff, Department
 from db import app,db
+from sqlalchemy import asc
 
 
 def Convert(tup, di):
@@ -73,6 +74,31 @@ def state_count():
         state, count = data
         result[state] = count
     return jsonify(result)
+
+@app.route('/timeoff/averagevacationtime', methods=['GET'])
+def vacation_time():
+    leave_count = db.session.query(TimeOff.id, func.count(
+        TimeOff.id)).group_by(TimeOff.id).order_by(asc(TimeOff.id)).all()
+    result = {}
+    for data in leave_count:
+        leave, count = data
+        leave = 'Number_of_vaction_days_for_Employee_id_{}_are '.format(str(leave))
+        result[leave] = count
+    return jsonify(result)
+
+@app.route('/hiring/percentage_of_freshers_and_experienced', methods=['GET'])
+def hiring_percentage():
+    hiring_percent = db.session.query(Employee.experience).all()
+    result = {}
+    freshers = 0
+    experienced = 0
+    for data in hiring_percent:
+        if data[0]<=3:
+            freshers+=1
+        else:
+            experienced+=1
+    result['percentage_of_freshers'] = round((freshers/len(hiring_percent))*100)
+    result['percentage_of_experienced'] = round((experienced/len(hiring_percent))*100)
 
 @app.route('/age_preference_recruitment', methods = ['GET'])
 def age_pref_recruitment():

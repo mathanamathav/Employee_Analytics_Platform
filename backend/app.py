@@ -86,5 +86,20 @@ def vacation_time():
         result[leave] = count
     return jsonify(result)
 
+@app.route('/hiring/percentage_of_freshers_and_experienced', methods=['GET'])
+def hiring_percentage():
+    hiring_percent = db.session.query(Employee.experience).all()
+    result = {}
+    freshers = 0
+    experienced = 0
+    for data in hiring_percent:
+        if data[0]<=3:
+            freshers+=1
+        else:
+            experienced+=1
+    result['percentage_of_freshers'] = round((freshers/len(hiring_percent))*100)
+    result['percentage_of_experienced'] = round((experienced/len(hiring_percent))*100)
+    return jsonify(result)
+
 if __name__ == '__main__':
     app.run(debug=True)

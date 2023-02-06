@@ -63,7 +63,13 @@ python app.py
 - [x] Department count
 - [x] Department maximum and minimum salary 
 - [x] Demographic city
-- [x] Demographic state 
+- [x] Demographic state
+- [x] Count gender given gender
+- [x] Employees who worked less than a year
+- [x] Employees whose age is above 45
+- [x] Vacation Time For Each Employee
+- [x] Percentage of Freshers and Experienced Employees Company Prefers
+- [x] Age Preference Recruitment
 - [ ] Add more
 
 

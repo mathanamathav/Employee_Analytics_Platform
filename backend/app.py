@@ -14,7 +14,7 @@ def Convert(tup, di):
 @app.route('/')
 @app.route('/index.html')
 def index():
-    return render_template('index.html', the_title='Tiger Home Page')
+    return render_template('index.html')
 
 
 @app.route('/gender_status', methods=['GET'])

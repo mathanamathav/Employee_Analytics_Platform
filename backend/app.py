@@ -74,6 +74,14 @@ def state_count():
         result[state] = count
     return jsonify(result)
 
+@app.route('/age_preference_recruitment', methods = ['GET'])
+def age_pref_recruitment():
+    age_pref = db.session.query(Employee.experience, func.count(Employee.id)).group_by(Employee.experience).filter(Employee.experience > 10).filter(Employee.age < 40).all()
+    result = {}
+    for data in age_pref:
+        age, count = data
+        result[age] = count
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -99,6 +99,14 @@ def hiring_percentage():
             experienced+=1
     result['percentage_of_freshers'] = round((freshers/len(hiring_percent))*100)
     result['percentage_of_experienced'] = round((experienced/len(hiring_percent))*100)
+
+@app.route('/age_preference_recruitment', methods = ['GET'])
+def age_pref_recruitment():
+    age_pref = db.session.query(Employee.experience, func.count(Employee.id)).group_by(Employee.experience).filter(Employee.experience > 10).filter(Employee.age < 40).all()
+    result = {}
+    for data in age_pref:
+        age, count = data
+        result[age] = count
     return jsonify(result)
 
 if __name__ == '__main__':

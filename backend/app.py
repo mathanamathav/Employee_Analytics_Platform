@@ -3,7 +3,7 @@ from flask import Flask, render_template, jsonify
 from sqlalchemy import func
 from models import Employee, TimeOff, Department
 from db import app,db
-
+import datetime 
 
 def Convert(tup, di):
     for a, b, c in tup:
@@ -73,6 +73,26 @@ def state_count():
         state, count = data
         result[state] = count
     return jsonify(result)
+
+@app.route('/employee_count_by_gender/<gender>')
+def employee_count_by_gender(gender):
+    count = Employee.query.filter_by(gender=gender).count()
+    return str(count)
+
+@app.route('/employees_less_than_a_year')
+def employees_less_than_a_year():
+    current_time = datetime.datetime.now()
+    one_year_ago = current_time - datetime.timedelta(days=365)
+    employees = Employee.query.filter(TimeOff.start_date >= one_year_ago,
+                                      TimeOff.end_date.is_(None) | (TimeOff.end_date >= one_year_ago)).all()
+    employee_list = [employee.name for employee in employees]
+    return str(employee_list)
+
+@app.route('/employees_above_45')
+def employees_above_45():
+    employees = Employee.query.filter(Employee.age > 45).all()
+    employee_list = [employee.name for employee in employees]
+    return str(employee_list)
 
 
 if __name__ == '__main__':

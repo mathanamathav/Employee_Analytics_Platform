@@ -4,6 +4,9 @@ from sqlalchemy import func
 from models import Employee, TimeOff, Department
 from db import app,db
 import datetime 
+from sqlalchemy import asc
+
+
 
 def Convert(tup, di):
     for a, b, c in tup:
@@ -74,6 +77,7 @@ def state_count():
         result[state] = count
     return jsonify(result)
 
+
 @app.route('/employee_count_by_gender/<gender>')
 def employee_count_by_gender(gender):
     count = Employee.query.filter_by(gender=gender).count()
@@ -93,6 +97,43 @@ def employees_above_45():
     employees = Employee.query.filter(Employee.age > 45).all()
     employee_list = [employee.name for employee in employees]
     return str(employee_list)
+
+
+@app.route('/timeoff/averagevacationtime', methods=['GET'])
+def vacation_time():
+    leave_count = db.session.query(TimeOff.id, func.count(
+        TimeOff.id)).group_by(TimeOff.id).order_by(asc(TimeOff.id)).all()
+    result = {}
+    for data in leave_count:
+        leave, count = data
+        leave = 'Number_of_vaction_days_for_Employee_id_{}_are '.format(str(leave))
+        result[leave] = count
+    return jsonify(result)
+
+@app.route('/hiring/percentage_of_freshers_and_experienced', methods=['GET'])
+def hiring_percentage():
+    hiring_percent = db.session.query(Employee.experience).all()
+    result = {}
+    freshers = 0
+    experienced = 0
+    for data in hiring_percent:
+        if data[0]<=3:
+            freshers+=1
+        else:
+            experienced+=1
+    result['percentage_of_freshers'] = round((freshers/len(hiring_percent))*100)
+    result['percentage_of_experienced'] = round((experienced/len(hiring_percent))*100)
+    return jsonify(result)
+
+
+@app.route('/age_preference_recruitment', methods = ['GET'])
+def age_pref_recruitment():
+    age_pref = db.session.query(Employee.experience, func.count(Employee.id)).group_by(Employee.experience).filter(Employee.experience > 10).filter(Employee.age < 40).all()
+    result = {}
+    for data in age_pref:
+        age, count = data
+        result[age] = count
+    return jsonify(result)
 
 
 if __name__ == '__main__':

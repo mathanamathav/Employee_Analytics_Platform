@@ -1,21 +1,419 @@
 {% extends 'base.html' %} {% block body %}
 
-<h1>List of Analytics Employee APIS</h1>
+<center>
+  <h1 style="font-family: 'Anton', sans-serif; color: #f7efe5">
+    List of Analytics Employee APIS
+  </h1>
+</center>
 
-<ul>
-  <li><a href="/gender_status">Gender Status</a></li>
-  <li><a href="/department/count">Department Count</a></li>
-  <li>
-    <a href="/department/minmaxsalary">Department Minimum & Maximum Salary</a>
-  </li>
-  <li><a href="/demographic/city">Demographic Cites</a></li>
-  <li><a href="/demographic/state">Demographic State</a></li>
-  <li><a href="/employee_count_by_gender/Male">Count gender given gender</a></li>
-  <li><a href="/employees_less_than_a_year">Employees who worked less than a year</a></li>
-  <li><a href="employees_above_45">Employees whose age is above 45</a></li>
-  <li><a href="/timeoff/averagevacationtime">Vacation Time For Each Employee</a></li>
-  <li><a href="/hiring/percentage_of_freshers_and_experienced">Percentage of Freshers and Experienced Employees Company Prefers</a></li>
-  <li><a href="/age_preference_recruitment">Age Preference Recruitment</a></li>
-</ul>
+<br />
+
+<div id="accordion">
+  <div class="card" style="background: #c3acd0; color: black">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button
+          style="
+            font-size: xx-large;
+            font-family: 'Inter', sans-serif;
+            color: #f7efe5;
+          "
+          class="btn btn-link"
+          data-toggle="collapse"
+          data-target="#collapseOne"
+          aria-expanded="true"
+          aria-controls="collapseOne"
+        >
+          Gender Status
+        </button>
+      </h5>
+    </div>
+
+    <div
+      id="collapseOne"
+      class="collapse show"
+      aria-labelledby="headingOne"
+      data-parent="#accordion"
+    >
+      <div class="card-body">
+        <p>
+          From this End-point it gives a general distribution of all the gender
+          available in the Company
+          <a href="/gender_status">API link Gender Status</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="background: #c3acd0; color: black">
+    <div class="card-header" id="headingTwo">
+      <h5 class="mb-0">
+        <button
+          style="
+            font-size: xx-large;
+            font-family: 'Inter', sans-serif;
+            color: #f7efe5;
+          "
+          class="btn btn-link collapsed"
+          data-toggle="collapse"
+          data-target="#collapseTwo"
+          aria-expanded="true"
+          aria-controls="collapseTwo"
+        >
+          Department Count
+        </button>
+      </h5>
+    </div>
+
+    <div
+      id="collapseTwo"
+      class="collapse"
+      aria-labelledby="headingTwo"
+      data-parent="#accordion"
+    >
+      <div class="card-body">
+        <p>
+          From this End-point it gives a general distribution department with
+          their count
+          <a href="/department/count">API link Department Count</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="background: #c3acd0; color: black">
+    <div class="card-header" id="headingthree">
+      <h5 class="mb-0">
+        <button
+          style="
+            font-size: xx-large;
+            font-family: 'Inter', sans-serif;
+            color: #f7efe5;
+          "
+          class="btn btn-link collapsed"
+          data-toggle="collapse"
+          data-target="#collapsethree"
+          aria-expanded="true"
+          aria-controls="collapsethree"
+        >
+          Department Minimum & Maximum Salary
+        </button>
+      </h5>
+    </div>
+
+    <div
+      id="collapsethree"
+      class="collapse"
+      aria-labelledby="headingthree"
+      data-parent="#accordion"
+    >
+      <div class="card-body">
+        <p>
+          From this End-point it gives a general department's Max and Min Salary
+          <a href="/department/minmaxsalary"
+            >API link Department Minimum & Maximum Salary</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="background: #c3acd0; color: black">
+    <div class="card-header" id="headingfour">
+      <h5 class="mb-0">
+        <button
+          style="
+            font-size: xx-large;
+            font-family: 'Inter', sans-serif;
+            color: #f7efe5;
+          "
+          class="btn btn-link collapsed"
+          data-toggle="collapse"
+          data-target="#collapsefour"
+          aria-expanded="true"
+          aria-controls="collapsefour"
+        >
+          Demographic Cites
+        </button>
+      </h5>
+    </div>
+
+    <div
+      id="collapsefour"
+      class="collapse"
+      aria-labelledby="headingfour"
+      data-parent="#accordion"
+    >
+      <div class="card-body">
+        <p>
+          From this End-point it gives a general distribution of employee cites
+          in the Company
+          <a href="/demographic/city">API link Demographic Cites</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="background: #c3acd0; color: black">
+    <div class="card-header" id="headingfive">
+      <h5 class="mb-0">
+        <button
+          style="
+            font-size: xx-large;
+            font-family: 'Inter', sans-serif;
+            color: #f7efe5;
+          "
+          class="btn btn-link collapsed"
+          data-toggle="collapse"
+          data-target="#collapsefive"
+          aria-expanded="true"
+          aria-controls="collapsefive"
+        >
+          Demographic State
+        </button>
+      </h5>
+    </div>
+
+    <div
+      id="collapsefive"
+      class="collapse"
+      aria-labelledby="headingfive"
+      data-parent="#accordion"
+    >
+      <div class="card-body">
+        <p>
+          From this End-point it gives a general distribution of employee states
+          in the Company
+          <a href="/demographic/state">API link Demographic State</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="background: #c3acd0; color: black">
+    <div class="card-header" id="headingsix">
+      <h5 class="mb-0">
+        <button
+          style="
+            font-size: xx-large;
+            font-family: 'Inter', sans-serif;
+            color: #f7efe5;
+          "
+          class="btn btn-link collapsed"
+          data-toggle="collapse"
+          data-target="#collapsesix"
+          aria-expanded="true"
+          aria-controls="collapsesix"
+        >
+          Count gender given gender
+        </button>
+      </h5>
+    </div>
+
+    <div
+      id="collapsesix"
+      class="collapse"
+      aria-labelledby="headingsix"
+      data-parent="#accordion"
+    >
+      <div class="card-body">
+        <p>
+          From this End-point it gives a Count of gender given gender as the
+          input as parameter
+          <a href="/employee_count_by_gender/Male"
+            >API link Count gender given gender</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="background: #c3acd0; color: black">
+    <div class="card-header" id="headingseven">
+      <h5 class="mb-0">
+        <button
+          style="
+            font-size: xx-large;
+            font-family: 'Inter', sans-serif;
+            color: #f7efe5;
+          "
+          class="btn btn-link collapsed"
+          data-toggle="collapse"
+          data-target="#collapseseven"
+          aria-expanded="true"
+          aria-controls="collapseseven"
+        >
+          Employees who worked less than a year
+        </button>
+      </h5>
+    </div>
+
+    <div
+      id="collapseseven"
+      class="collapse"
+      aria-labelledby="headingseven"
+      data-parent="#accordion"
+    >
+      <div class="card-body">
+        <p>
+          From this End-point it gives a employee worked less than a year
+          <a href="/employees_less_than_a_year"
+            >API link Employees who worked less than a year</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="background: #c3acd0; color: black">
+    <div class="card-header" id="headingeight">
+      <h5 class="mb-0">
+        <button
+          style="
+            font-size: xx-large;
+            font-family: 'Inter', sans-serif;
+            color: #f7efe5;
+          "
+          class="btn btn-link collapsed"
+          data-toggle="collapse"
+          data-target="#collapseeight"
+          aria-expanded="true"
+          aria-controls="collapseeight"
+        >
+          Employees whose age is above 45
+        </button>
+      </h5>
+    </div>
+
+    <div
+      id="collapseeight"
+      class="collapse"
+      aria-labelledby="headingeight"
+      data-parent="#accordion"
+    >
+      <div class="card-body">
+        <p>
+          From this End-point it gives a employee whose age below than 45 years
+          <a href="employees_above_45"
+            >API link Employees whose age is above 45</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="background: #c3acd0; color: black">
+    <div class="card-header" id="headingnine">
+      <h5 class="mb-0">
+        <button
+          style="
+            font-size: xx-large;
+            font-family: 'Inter', sans-serif;
+            color: #f7efe5;
+          "
+          class="btn btn-link collapsed"
+          data-toggle="collapse"
+          data-target="#collapsenine"
+          aria-expanded="true"
+          aria-controls="collapsenine"
+        >
+          Vacation Time For Each Employee
+        </button>
+      </h5>
+    </div>
+
+    <div
+      id="collapsenine"
+      class="collapse"
+      aria-labelledby="headingnine"
+      data-parent="#accordion"
+    >
+      <div class="card-body">
+        <p>
+          From this End-point it gives the vaction time for each employee
+          <a href="/timeoff/averagevacationtime"
+            >API link Vacation Time For Each Employee</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="background: #c3acd0; color: black">
+    <div class="card-header" id="headingten">
+      <h5 class="mb-0">
+        <button
+          style="
+            font-size: xx-large;
+            font-family: 'Inter', sans-serif;
+            color: #f7efe5;
+          "
+          class="btn btn-link collapsed"
+          data-toggle="collapse"
+          data-target="#collapseten"
+          aria-expanded="true"
+          aria-controls="collapseten"
+        >
+          Percentage of Freshers and Experienced Employees Company Prefers
+        </button>
+      </h5>
+    </div>
+
+    <div
+      id="collapseten"
+      class="collapse"
+      aria-labelledby="headingten"
+      data-parent="#accordion"
+    >
+      <div class="card-body">
+        <p>
+          From this End-point it gives the Percentage of Freshers and
+          Experienced Employees Company Prefers
+          <a href="/hiring/percentage_of_freshers_and_experienced"
+            >API link Percentage of Freshers and Experienced Employees Company
+            Prefers</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="background: #c3acd0; color: black">
+    <div class="card-header" id="headingeleven">
+      <h5 class="mb-0">
+        <button
+          style="
+            font-size: xx-large;
+            font-family: 'Inter', sans-serif;
+            color: #f7efe5;
+          "
+          class="btn btn-link collapsed"
+          data-toggle="collapse"
+          data-target="#collapseeleven"
+          aria-expanded="true"
+          aria-controls="collapseeleven"
+        >
+          Age Preference Recruitment
+        </button>
+      </h5>
+    </div>
+
+    <div
+      id="collapseeleven"
+      class="collapse"
+      aria-labelledby="headingeleven"
+      data-parent="#accordion"
+    >
+      <div class="card-body">
+        <p>
+          From this End-point it gives the age Preference for Recruitment
+          <a href="/age_preference_recruitment"
+            >API link Age Preference Recruitment</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

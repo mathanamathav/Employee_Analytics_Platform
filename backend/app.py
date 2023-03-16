@@ -1,17 +1,9 @@
 # Employee Platform Imports
 from flask import Flask, render_template, jsonify
-from sqlalchemy import func
-from models import Employee, TimeOff, Department
-from db import app,db
-import datetime 
-from sqlalchemy import asc
+from db import app
+import requests
 
-
-
-def Convert(tup, di):
-    for a, b, c in tup:
-        di.setdefault(a, []).extend([b, c])
-    return di
+EMPLOYEE_DATA_PLATFORM_LINK = 'https://emp-data-app.azurewebsites.net/api/fetchall'
 
 
 @app.route('/')
@@ -21,119 +13,115 @@ def index():
 
 
 @app.route('/gender_status', methods=['GET'])
-def symbol():
-    gender_count = db.session.query(Employee.gender, func.count(
-        Employee.gender)).group_by(Employee.gender).all()
-    result = {}
-    for data in gender_count:
-        gender, count = data
-        result[gender] = count
-    return jsonify(result)
+def gender_status():
+    
+    req_data = requests.get(EMPLOYEE_DATA_PLATFORM_LINK)
+    if req_data.status_code != 200:
+        return jsonify({'Error message': 'Employee Data platform is not currently online'})
+    req_data = req_data.json()
+
+    result_data = {}
+    for data in req_data:
+        if data['gender'] in result_data:
+            result_data[data['gender']] += 1
+        else:
+            result_data[data['gender']] = 1
+    return jsonify(result_data)
 
 
 @app.route('/department/count', methods=['GET'])
-def get_department_counts():
-    department_counts = db.session.query(Department.dept_name, func.count(Employee.id).label('employee_count')) \
-        .join(Employee, Employee.dept_id == Department.id) \
-        .group_by(Department.id) \
-        .all()
-    result = {}
-    for data in department_counts:
-        department, count = data
-        result[department] = count
-    return jsonify(result)
+def department_counts():
+
+    req_data = requests.get(EMPLOYEE_DATA_PLATFORM_LINK)
+    if req_data.status_code != 200:
+        return jsonify({'Error message': 'Employee Data platform is not currently online'})
+    req_data = req_data.json()
+
+    result_data = {}
+    for data in req_data:
+        if data['department_name'] in result_data:
+            result_data[data['department_name']] += 1
+        else:
+            result_data[data['department_name']] = 1
+    return jsonify(result_data)
 
 
 @app.route('/department/minmaxsalary', methods=['GET'])
 def get_minmax_salary():
-    department_salary = db.session.query(Department.dept_name, func.min(Employee.salary).label('min_salary'),
-                                         func.max(Employee.salary).label('max_salary')) \
-        .join(Employee, Employee.dept_id == Department.id) \
-        .group_by(Department.id) \
-        .all()
-    result = {}
-    return jsonify(Convert(department_salary, result))
+
+    req_data = requests.get(EMPLOYEE_DATA_PLATFORM_LINK)
+    if req_data.status_code != 200:
+        return jsonify({'Error message': 'Employee Data platform is not currently online'})
+    req_data = req_data.json()
+
+    result_data = {}
+    for data in req_data:
+        if data['department_name'] in result_data:
+            result_data[data['department_name']].append(
+                data['employee_salary'])
+        else:
+            result_data[data['department_name']] = [data['employee_salary']]
+
+    for data in result_data:
+        if len(result_data[data]) == 1:
+            result_data[data] = {'min': result_data[data]
+                                 [0], 'max': result_data[data][0]}
+        else:
+            max_sal, min_sal = max(result_data[data]), min(result_data[data])
+            result_data[data] = {'min': min_sal, 'max': max_sal}
+
+    return jsonify(result_data)
 
 
 @app.route('/demographic/city', methods=['GET'])
 def city_count():
+    
+    req_data = requests.get(EMPLOYEE_DATA_PLATFORM_LINK)
+    if req_data.status_code != 200:
+        return jsonify({'Error message': 'Employee Data platform is not currently online'})
+    req_data = req_data.json()
 
-    city_count = db.session.query(Employee.city, func.count(
-        Employee.city)).group_by(Employee.city).all()
-    result = {}
-    for data in city_count:
-        city, count = data
-        result[city] = count
-    return jsonify(result)
+    result_data = {}
+    for data in req_data:
+        if data['city'] in result_data:
+            result_data[data['city']] += 1
+        else:
+            result_data[data['city']] = 1
+    return jsonify(result_data)
 
 
 @app.route('/demographic/state', methods=['GET'])
 def state_count():
-    state_count = db.session.query(Employee.state, func.count(
-        Employee.state)).group_by(Employee.state).all()
-    result = {}
-    for data in state_count:
-        state, count = data
-        result[state] = count
-    return jsonify(result)
 
-
-@app.route('/employee_count_by_gender/<gender>')
-def employee_count_by_gender(gender):
-    count = Employee.query.filter_by(gender=gender).count()
-    return str(count)
-
-@app.route('/employees_less_than_a_year')
-def employees_less_than_a_year():
-    current_time = datetime.datetime.now()
-    one_year_ago = current_time - datetime.timedelta(days=365)
-    employees = Employee.query.filter(TimeOff.start_date >= one_year_ago,
-                                      TimeOff.end_date.is_(None) | (TimeOff.end_date >= one_year_ago)).all()
-    employee_list = [employee.name for employee in employees]
-    return str(employee_list)
-
-@app.route('/employees_above_45')
-def employees_above_45():
-    employees = Employee.query.filter(Employee.age > 45).all()
-    employee_list = [employee.name for employee in employees]
-    return str(employee_list)
-
-
-@app.route('/timeoff/averagevacationtime', methods=['GET'])
-def vacation_time():
-    leave_count = db.session.query(TimeOff.id, func.count(
-        TimeOff.id)).group_by(TimeOff.id).order_by(asc(TimeOff.id)).all()
-    result = {}
-    for data in leave_count:
-        leave, count = data
-        leave = 'Number_of_vaction_days_for_Employee_id_{}_are '.format(str(leave))
-        result[leave] = count
-    return jsonify(result)
-
-@app.route('/hiring/percentage_of_freshers_and_experienced', methods=['GET'])
-def hiring_percentage():
-    hiring_percent = db.session.query(Employee.experience).all()
-    result = {}
-    freshers = 0
-    experienced = 0
-    for data in hiring_percent:
-        if data[0]<=3:
-            freshers+=1
+    req_data = requests.get(EMPLOYEE_DATA_PLATFORM_LINK)
+    if req_data.status_code != 200:
+        return jsonify({'Error message': 'Employee Data platform is not currently online'})
+    req_data = req_data.json()
+    
+    result_data = {}
+    for data in req_data:
+        if data['state'] in result_data:
+            result_data[data['state']] += 1
         else:
-            experienced+=1
-    result['percentage_of_freshers'] = round((freshers/len(hiring_percent))*100)
-    result['percentage_of_experienced'] = round((experienced/len(hiring_percent))*100)
-    return jsonify(result)
+            result_data[data['state']] = 1
+    return jsonify(result_data)
 
 
-@app.route('/age_preference_recruitment', methods = ['GET'])
-def age_pref_recruitment():
-    age_pref = db.session.query(Employee.experience, func.count(Employee.id)).group_by(Employee.experience).filter(Employee.experience > 10).filter(Employee.age < 40).all()
-    result = {}
-    for data in age_pref:
-        age, count = data
-        result[age] = count
-    return jsonify(result)
+@app.route('/demographic/country', methods=['GET'])
+def country_count():
+    
+    req_data = requests.get(EMPLOYEE_DATA_PLATFORM_LINK)
+    if req_data.status_code != 200:
+        return jsonify({'Error message': 'Employee Data platform is not currently online'})
+    req_data = req_data.json()
+    
+    result_data = {}
+    for data in req_data:
+        if data['country'] in result_data:
+            result_data[data['country']] += 1
+        else:
+            result_data[data['country']] = 1
+    return jsonify(result_data)
 
 
 if __name__ == '__main__':

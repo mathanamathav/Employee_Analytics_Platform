@@ -14,8 +14,9 @@ def index():
 
 @app.route('/gender_status', methods=['GET'])
 def gender_status():
-    
     req_data = requests.get(EMPLOYEE_DATA_PLATFORM_LINK)
+    print("Fetch made to Employee data platform.")
+    
     if req_data.status_code != 200:
         return jsonify({'Error message': 'Employee Data platform is not currently online'})
     req_data = req_data.json()
@@ -33,6 +34,7 @@ def gender_status():
 def department_counts():
 
     req_data = requests.get(EMPLOYEE_DATA_PLATFORM_LINK)
+    print("Fetch made to Employee data platform.")
     if req_data.status_code != 200:
         return jsonify({'Error message': 'Employee Data platform is not currently online'})
     req_data = req_data.json()
@@ -50,6 +52,8 @@ def department_counts():
 def get_minmax_salary():
 
     req_data = requests.get(EMPLOYEE_DATA_PLATFORM_LINK)
+    print("Fetch made to Employee data platform.")
+
     if req_data.status_code != 200:
         return jsonify({'Error message': 'Employee Data platform is not currently online'})
     req_data = req_data.json()
@@ -77,6 +81,8 @@ def get_minmax_salary():
 def city_count():
     
     req_data = requests.get(EMPLOYEE_DATA_PLATFORM_LINK)
+    print("Fetch made to Employee data platform.")
+
     if req_data.status_code != 200:
         return jsonify({'Error message': 'Employee Data platform is not currently online'})
     req_data = req_data.json()
@@ -94,6 +100,8 @@ def city_count():
 def state_count():
 
     req_data = requests.get(EMPLOYEE_DATA_PLATFORM_LINK)
+    print("Fetch made to Employee-data-platform.")
+
     if req_data.status_code != 200:
         return jsonify({'Error message': 'Employee Data platform is not currently online'})
     req_data = req_data.json()
@@ -111,6 +119,8 @@ def state_count():
 def country_count():
     
     req_data = requests.get(EMPLOYEE_DATA_PLATFORM_LINK)
+    print("Fetch made to Employee data platform.")
+
     if req_data.status_code != 200:
         return jsonify({'Error message': 'Employee Data platform is not currently online'})
     req_data = req_data.json()

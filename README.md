@@ -30,6 +30,9 @@ To create API for Employee Analytics Platform for organizations.
 <hr>
 <h3> Application Preview:</h3>
 
+![Screenshot 2023-03-30 183625](https://user-images.githubusercontent.com/62739618/228847098-67b95d9b-f0c1-4878-940c-1a4b685c4d15.png)
+
+
 ![ezgif com-video-to-gif](https://user-images.githubusercontent.com/62739618/217067447-3a934d6e-c816-40d1-9ca9-0662106b06e4.gif)
 <hr>
 
